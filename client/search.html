@@ -1,0 +1,60 @@
+<!-- 24410764 -->
+<!-- Niven Maina -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Events - Bright Futures Foundation</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <a class="brand" href="index.html">Bright Futures Foundation</a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="page-heading">
+            <h1 class="section-title">Filter Charity Events</h1>
+            <p class="section-subtitle">Filter your events by date, location or category to find the ones that matter to you.</p>
+        </div>
+        <form id="search-form" class="search-form">
+            <div class="form-group">
+                <label for="date">Event date</label>
+                <input type="date" id="date" name="date">
+            </div>
+            <div class="form-group">
+                <label for="location">Location</label>
+                <input type="text" id="location" name="location" placeholder="e.g. Perth">
+            </div>
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select id="category" name="category">
+                    <option value="">All categories</option>
+                </select>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn-primary">Search</button>
+                <button type="button" id="clear-filters" class="btn-secondary">Clear Filters</button>
+            </div>
+        </form>
+
+        <div id="error-message"></div>
+        <div id="results-grid" class="event-grid"></div>
+    </main>
+
+    <footer>
+        &copy; 2026 Bright Futures Foundation. This assessment does not endorse any specific external organisation.
+    </footer>
+
+    <script src="js/api.js"></script>
+    <script src="js/search.js"></script>
+</body>
+</html>
