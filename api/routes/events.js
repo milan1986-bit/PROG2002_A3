@@ -81,7 +81,19 @@ router.get('/:id', async (req, res) => {
         if (rows.length === 0) {
             return res.status(404).json({ error: 'Event not found.' });
         }
-        res.json(addStatus(rows[0]));
+
+        // get the registrations for this event
+        const [registrations] = await db.query(
+            `SELECT registration_id, full_name, tickets, registration_date
+             FROM registrations
+             WHERE event_id = ?
+             ORDER BY registration_date DESC`,
+            [req.params.id]
+        );
+
+        const event = addStatus(rows[0]);
+        event.registrations = registrations;
+        res.json(event);
     } catch (err) {
         console.error(err);
         res.status(500).json({ error: 'Failed to retrieve event details.' });
