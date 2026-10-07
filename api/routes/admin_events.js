@@ -78,6 +78,60 @@ router.post('/', async (req, res) => {
     }
 });
 
+// PUT /api/admin/events/:id - update an existing event
+router.put('/:id', async (req, res) => {
+    const message = validateEvent(req.body);
+    if (message) {
+        return res.status(400).json({ update: 'error', message: message });
+    }
+
+    try {
+        const event = getEventValues(req.body);
+        event.push(req.params.id);
+        const [result] = await db.query(
+            `UPDATE events SET
+                org_id = ?, category_id = ?, name = ?, short_description = ?, full_description = ?,
+                event_date = ?, event_time = ?, location = ?, image_url = ?, ticket_price = ?,
+                is_free = ?, fundraising_goal = ?, current_progress = ?, is_suspended = ?,
+                latitude = ?, longitude = ?
+             WHERE event_id = ?`,
+            event
+        );
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ update: 'error', message: 'Event not found.' });
+        }
+        res.json({ update: 'success' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ update: 'error', message: 'Failed to update the event.' });
+    }
+});
+
+// DELETE /api/admin/events/:id - only allowed if the event has no registrations
+router.delete('/:id', async (req, res) => {
+    try {
+        const [registrations] = await db.query(
+            'SELECT registration_id FROM registrations WHERE event_id = ?',
+            [req.params.id]
+        );
+        if (registrations.length > 0) {
+            return res.status(409).json({
+                delete: 'error',
+                message: `This event cannot be deleted because it has ${registrations.length} registration(s).`
+            });
+        }
+
+        const [result] = await db.query('DELETE FROM events WHERE event_id = ?', [req.params.id]);
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ delete: 'error', message: 'Event not found.' });
+        }
+        res.json({ delete: 'success' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ delete: 'error', message: 'Failed to delete the event.' });
+    }
+});
+
 // Returns an error message, or an empty string when the data is valid
 function validateEvent(body) {
     if (!body.name || !body.category_id || !body.org_id || !body.short_description ||
@@ -135,6 +189,5 @@ function addStatus(event) {
         status: status
     };
 }
-
 
 module.exports = router;
