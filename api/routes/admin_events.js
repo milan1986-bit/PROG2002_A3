@@ -54,6 +54,73 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+// POST /api/admin/events - insert a new event
+router.post('/', async (req, res) => {
+    const message = validateEvent(req.body);
+    if (message) {
+        return res.status(400).json({ insert: 'error', message: message });
+    }
+
+    try {
+        const event = getEventValues(req.body);
+        const [result] = await db.query(
+            `INSERT INTO events
+             (org_id, category_id, name, short_description, full_description, event_date, event_time,
+              location, image_url, ticket_price, is_free, fundraising_goal, current_progress,
+              is_suspended, latitude, longitude)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            event
+        );
+        res.status(201).json({ insert: 'success', event_id: result.insertId });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ insert: 'error', message: 'Failed to save the event.' });
+    }
+});
+
+// Returns an error message, or an empty string when the data is valid
+function validateEvent(body) {
+    if (!body.name || !body.category_id || !body.org_id || !body.short_description ||
+        !body.event_date || !body.location) {
+        return 'Please fill in all required fields.';
+    }
+    if (isNaN(body.ticket_price || 0) || Number(body.ticket_price || 0) < 0) {
+        return 'Ticket price must be 0 or more.';
+    }
+    if (isNaN(body.fundraising_goal || 0) || Number(body.fundraising_goal || 0) < 0) {
+        return 'Fundraising goal must be 0 or more.';
+    }
+    if (isNaN(body.current_progress || 0) || Number(body.current_progress || 0) < 0) {
+        return 'Current progress must be 0 or more.';
+    }
+    if (isNaN(body.latitude || 0) || isNaN(body.longitude || 0)) {
+        return 'Latitude and longitude must be numbers.';
+    }
+    return '';
+}
+
+// Puts the request body values in the same order as the columns in the SQL above
+function getEventValues(body) {
+    return [
+        body.org_id,
+        body.category_id,
+        body.name,
+        body.short_description,
+        body.full_description || null,
+        body.event_date,
+        body.event_time || null,
+        body.location,
+        body.image_url || null,
+        body.is_free ? 0 : Number(body.ticket_price || 0),
+        body.is_free ? true : false,
+        Number(body.fundraising_goal || 0),
+        Number(body.current_progress || 0),
+        body.is_suspended ? true : false,
+        body.latitude || null,
+        body.longitude || null
+    ];
+}
+
 // adds the status (upcoming, past or suspended) to the event
 function addStatus(event) {
     const today = new Date();
