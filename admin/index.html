@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events - Charity Events Admin</title>
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <header class="admin-header">
+        <div class="header-inner">
+            <a class="brand" href="index.html">Bright Futures <span>Admin</span></a>
+            <nav class="admin-nav">
+                <ul>
+                    <li><a href="index.html" class="active">Events</a></li>
+                    <li><a href="add_event.html">Add a new event</a></li>
+                    <li><a href="categories.html">Categories</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="page-heading">
+            <div>
+                <h1>All Charity Events</h1>
+                <p class="subtitle">Every event (Active, Past and Suspended). Click Edit to update an event and see its registrations.</p>
+            </div>
+            <a class="btn btn-primary" href="add_event.html">+ Add a new event</a>
+        </div>
+
+        <div class="panel">
+            <div id="data" class="table-wrapper">
+                <p class="empty-state">Loading events...</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>&copy; 2026 Bright Futures Foundation &middot; Staff administration</footer>
+
+    <script src="js/api.js"></script>
+    <script src="js/index.js"></script>
+</body>
+</html>
