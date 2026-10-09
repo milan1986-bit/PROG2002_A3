@@ -56,14 +56,56 @@ function renderEvent(event) {
                     <div class="info-card">
                         <h3>Ticket Information</h3>
                         <p class="price-tag">${formatPrice(event)}</p>
-                        <button id="register-btn" class="btn btn-primary" style="margin-top: 0.8rem;">Register</button>
+                        <a id="register-btn" class="btn btn-primary register-link" href="register.html?id=${event.event_id}">Register</a>
                     </div>
                 </div>
+
+                <div class="info-card weather-card">
+                    <h3>Weather Forecast</h3>
+                    <div id="weather"><p class="event-meta">Loading forecast...</p></div>
+                </div>
+
+                <h2 class="section-title registrations-title">Registrations</h2>
+                <div id="registrations"></div>
             </div>
         </article>
     `;
 
-    document.getElementById('register-btn').addEventListener('click', () => {
-        alert('This feature is currently under construction.');
+    showRegistrations(event.registrations);
+    showWeather(event);
+}
+
+// shows the list of registrations
+function showRegistrations(registrations) {
+    const div = document.getElementById('registrations');
+    div.innerHTML = '';
+
+    if (registrations.length === 0) {
+        div.innerHTML = '<p class="empty-state">No registrations yet. Be the first to register!</p>';
+        return;
+    }
+
+    const table = document.createElement('table');
+    table.className = 'data-table';
+    table.innerHTML = '<tr><th>Name</th><th>Tickets</th><th>Registration date</th></tr>';
+
+    registrations.forEach(registration => {
+        const row = document.createElement('tr');
+
+        const nameCell = document.createElement('td');
+        nameCell.textContent = registration.full_name;
+        row.appendChild(nameCell);
+
+        const ticketsCell = document.createElement('td');
+        ticketsCell.textContent = registration.tickets;
+        row.appendChild(ticketsCell);
+
+        const dateCell = document.createElement('td');
+        dateCell.textContent = formatDate(registration.registration_date);
+        row.appendChild(dateCell);
+
+        table.appendChild(row);
     });
+
+    div.appendChild(table);
 }
