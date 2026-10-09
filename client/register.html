@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Registration - Bright Futures Foundation</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="header-inner">
+            <a class="brand" href="index.html">Bright Futures Foundation</a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="search.html">Search Events</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="page-heading">
+            <h1 class="section-title">Event Registration</h1>
+            <p class="section-subtitle">Fill in your details and choose how many tickets you want.</p>
+        </div>
+
+        <div id="error-message"></div>
+
+        <div class="register-layout">
+            <!-- event info -->
+            <div id="event-info" class="info-card">
+                <p class="empty-state">Loading event...</p>
+            </div>
+
+            <div>
+                <form id="form1" class="register-form" onsubmit="validateForm(); return(false);">
+                    <div class="form-group">
+                        <label for="txtName">Full name *</label>
+                        <input type="text" id="txtName" placeholder="Enter your full name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="txtEmail">Email *</label>
+                        <input type="email" id="txtEmail" placeholder="Enter your email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="txtPhone">Phone number *</label>
+                        <input type="text" id="txtPhone" placeholder="Enter your phone number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="txtTickets">Number of tickets * (1 - 10)</label>
+                        <input type="number" id="txtTickets" min="1" max="10" value="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="txtDate">Registration date</label>
+                        <input type="text" id="txtDate" readonly>
+                    </div>
+                    <div class="form-actions">
+                        <input type="reset" value="Clear" class="btn btn-secondary">
+                        <input type="submit" value="Complete Registration" class="btn btn-primary">
+                    </div>
+                </form>
+
+                <!-- confirmation message -->
+                <div id="confirmation" class="confirmation"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2026 Bright Futures Foundation. This assessment does not endorse any specific external organisation.
+    </footer>
+
+    <script src="js/api.js"></script>
+    <script src="js/register.js"></script>
+</body>
+</html>
