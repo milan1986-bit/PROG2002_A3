@@ -15,7 +15,9 @@ router.get('/', async (req, res) => {
                 e.ticket_price,
                 e.is_free,
                 e.is_suspended,
-                c.name AS category_name
+                c.name AS category_name,
+                (SELECT COUNT(*) FROM registrations r WHERE r.event_id = e.event_id) AS registration_count,
+                (SELECT COALESCE(SUM(r.tickets), 0) FROM registrations r WHERE r.event_id = e.event_id) AS tickets_sold
              FROM events e
              JOIN categories c ON e.category_id = c.category_id
              ORDER BY e.event_date DESC`
