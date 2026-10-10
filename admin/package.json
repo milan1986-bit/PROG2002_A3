@@ -1,0 +1,13 @@
+{
+  "name": "charityevents-admin",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Admin-side website for the Charity Events case study (PROG2002 Assessment 3)",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
