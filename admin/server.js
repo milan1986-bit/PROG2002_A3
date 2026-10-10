@@ -11,6 +11,10 @@ app.use(express.static(__dirname));
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
+//route to serve add_event.html
+app.get("/add_event", (req, res) => {
+  res.sendFile(path.join(__dirname, "add_event.html"));
+});
 
 app.listen(PORT, () => {
   console.log("Admin website running in " + PORT);
