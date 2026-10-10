@@ -32,9 +32,7 @@ router.post('/', async (req, res) => {
         }
 
         // Registrations are closed once the event date has passed
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        if (new Date(events[0].event_date) < today) {
+        if (db.getDateStatus(events[0].event_date) === 'past') {
             return res.status(400).json({ insert: 'error', message: 'This event has already taken place.' });
         }
 
