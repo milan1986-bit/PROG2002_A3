@@ -111,3 +111,63 @@ footer {
 }
 
 .panel h2 { margin-top: 0; }
+
+/* Buttons */
+.btn, button {
+    display: inline-block;
+    cursor: pointer;
+    border: none;
+    border-radius: 6px;
+    padding: 0.55rem 1.1rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: inherit;
+    text-decoration: none;
+    text-align: center;
+    white-space: nowrap;
+}
+.btn-primary { background: var(--primary); color: white; }
+.btn-primary:hover { background: var(--primary-dark); }
+.btn-secondary { background: var(--border); color: var(--text); }
+.btn-secondary:hover { background: #dee2e6; }
+.btn-danger { background: #fff5f5; color: var(--danger); border: 1px solid #ffc9c9; }
+.btn-danger:hover { background: var(--danger); color: white; }
+.btn-small { padding: 0.3rem 0.7rem; font-size: 0.85rem; }
+button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.table-wrapper { overflow-x: auto; }
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+}
+.data-table th, .data-table td {
+    text-align: left;
+    padding: 0.65rem 0.8rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+}
+.data-table th {
+    background: var(--bg);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+}
+.data-table tbody tr:hover { background: #f8f9ff; }
+.data-table td.actions { white-space: nowrap; }
+.data-table td.actions .btn { margin-right: 0.3rem; }
+
+.empty-state { text-align: center; color: var(--muted); padding: 1.5rem; }
+
+.badge {
+    display: inline-block;
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+.badge.status-upcoming { background: #ebfbee; color: var(--success); }
+.badge.status-past { background: #e9ecef; color: var(--muted); }
+.badge.status-suspended { background: #fff4e6; color: var(--warning); }
