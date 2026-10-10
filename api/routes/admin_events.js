@@ -30,12 +30,7 @@ router.get('/', async (req, res) => {
 // GET /api/admin/events/:id - one event with all of its registrations
 router.get('/:id', async (req, res) => {
     try {
-        const [rows] = await db.query(
-            `SELECT e.*, DATE_FORMAT(e.event_date, '%Y-%m-%d') AS event_date
-             FROM events e
-             WHERE e.event_id = ?`,
-            [req.params.id]
-        );
+        const [rows] = await db.query('SELECT * FROM events WHERE event_id = ?', [req.params.id]);
         if (rows.length === 0) {
             return res.status(404).json({ error: 'Event not found.' });
         }
@@ -177,10 +172,7 @@ function getEventValues(body) {
 
 // adds the status (upcoming, past or suspended) to the event
 function addStatus(event) {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const eventDate = new Date(event.event_date);
-    let status = eventDate >= today ? 'upcoming' : 'past';
+    let status = db.getDateStatus(event.event_date);
     if (event.is_suspended) {
         status = 'suspended';
     }
