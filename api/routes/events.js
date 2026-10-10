@@ -101,12 +101,9 @@ router.get('/:id', async (req, res) => {
 });
 
 function addStatus(event) {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const eventDate = new Date(event.event_date);
     return {
         ...event,
-        status: eventDate >= today ? 'upcoming' : 'past'
+        status: db.getDateStatus(event.event_date)
     };
 }
 
