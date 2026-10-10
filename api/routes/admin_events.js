@@ -59,6 +59,11 @@ router.post('/', async (req, res) => {
     }
 
     try {
+        const refMessage = await checkReferences(req.body);
+        if (refMessage) {
+            return res.status(400).json({ insert: 'error', message: refMessage });
+        }
+
         const event = getEventValues(req.body);
         const [result] = await db.query(
             `INSERT INTO events
@@ -83,6 +88,11 @@ router.put('/:id', async (req, res) => {
     }
 
     try {
+        const refMessage = await checkReferences(req.body);
+        if (refMessage) {
+            return res.status(400).json({ update: 'error', message: refMessage });
+        }
+
         const event = getEventValues(req.body);
         event.push(req.params.id);
         const [result] = await db.query(
@@ -146,6 +156,20 @@ function validateEvent(body) {
     }
     if (isNaN(body.latitude || 0) || isNaN(body.longitude || 0)) {
         return 'Latitude and longitude must be numbers.';
+    }
+    return '';
+}
+
+// Checks that the selected category and organisation exist (foreign keys).
+// Returns an error message, or an empty string when both exist
+async function checkReferences(body) {
+    const [categories] = await db.query('SELECT category_id FROM categories WHERE category_id = ?', [body.category_id]);
+    if (categories.length === 0) {
+        return 'The selected category does not exist.';
+    }
+    const [organisations] = await db.query('SELECT org_id FROM organisations WHERE org_id = ?', [body.org_id]);
+    if (organisations.length === 0) {
+        return 'The selected organisation does not exist.';
     }
     return '';
 }
