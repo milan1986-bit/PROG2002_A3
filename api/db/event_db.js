@@ -23,4 +23,18 @@ const pool = mysql.createPool({
 
 const promisePool = pool.promise();
 
+// Turns a 'YYYY-MM-DD' event date into a Date at local midnight
+function toLocalDate(dateString) {
+    const parts = String(dateString).slice(0, 10).split('-');
+    return new Date(parts[0], parts[1] - 1, parts[2]);
+}
+
+// Returns 'upcoming' or 'past' for an event date
+function getDateStatus(dateString) {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return toLocalDate(dateString) >= today ? 'upcoming' : 'past';
+}
+
 module.exports = promisePool;
+module.exports.getDateStatus = getDateStatus;
