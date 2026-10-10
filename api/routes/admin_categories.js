@@ -23,4 +23,31 @@ router.post('/', async (req, res) => {
     }
 });
 
+// PUT /api/admin/categories/:id - body: { name }
+router.put('/:id', async (req, res) => {
+    const name = req.body.name;
+    if (!name) {
+        return res.status(400).json({ update: 'error', message: 'Category name is required.' });
+    }
+
+    try {
+        const [existing] = await db.query(
+            'SELECT category_id FROM categories WHERE name = ? AND category_id <> ?',
+            [name, req.params.id]
+        );
+        if (existing.length > 0) {
+            return res.status(409).json({ update: 'error', message: 'Another category already has this name.' });
+        }
+
+        const [result] = await db.query('UPDATE categories SET name = ? WHERE category_id = ?', [name, req.params.id]);
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ update: 'error', message: 'Category not found.' });
+        }
+        res.json({ update: 'success' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ update: 'error', message: 'Failed to update the category.' });
+    }
+});
+
 module.exports = router;
