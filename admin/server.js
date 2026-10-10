@@ -19,6 +19,10 @@ app.get("/add_event", (req, res) => {
 app.get("/update_event", (req, res) => {
   res.sendFile(path.join(__dirname, "update_event.html"));
 });
+//route to serve categories.html
+app.get("/categories", (req, res) => {
+  res.sendFile(path.join(__dirname, "categories.html"));
+});
 
 app.listen(PORT, () => {
   console.log("Admin website running in " + PORT);
