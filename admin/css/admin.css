@@ -1,0 +1,113 @@
+:root {
+    --primary: #3b5bdb;
+    --primary-dark: #253a8f;
+    --header: #1b2433;
+    --bg: #f1f3f5;
+    --card-bg: #ffffff;
+    --text: #212529;
+    --muted: #6c757d;
+    --border: #e9ecef;
+    --success: #2f9e44;
+    --danger: #e03131;
+    --warning: #e67700;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.5;
+}
+
+/* header and nav */
+.admin-header {
+    background: var(--header);
+    color: white;
+    padding: 0.9rem 1.5rem;
+}
+
+.header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.brand {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: white;
+    text-decoration: none;
+}
+
+.brand span {
+    background: var(--primary);
+    border-radius: 4px;
+    padding: 0.05rem 0.45rem;
+    font-size: 0.85rem;
+    margin-left: 0.3rem;
+    vertical-align: middle;
+}
+
+.admin-nav ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin: 0;
+    padding: 0;
+}
+
+.admin-nav a {
+    color: #ced4da;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    display: block;
+}
+
+.admin-nav a:hover { color: white; background: rgba(255,255,255,0.08); }
+.admin-nav a.active { color: white; background: var(--primary); }
+
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1.5rem;
+}
+
+footer {
+    text-align: center;
+    padding: 1.5rem;
+    color: var(--muted);
+    font-size: 0.85rem;
+}
+
+.page-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.page-heading h1 { margin: 0; font-size: 1.7rem; }
+.subtitle { margin: 0.2rem 0 0; color: var(--muted); }
+.muted { color: var(--muted); font-size: 0.85rem; }
+
+.panel {
+    background: var(--card-bg);
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.panel h2 { margin-top: 0; }
