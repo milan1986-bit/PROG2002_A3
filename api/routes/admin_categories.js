@@ -50,4 +50,26 @@ router.put('/:id', async (req, res) => {
     }
 });
 
+// DELETE /api/admin/categories/:id - not allowed while events still use the category
+router.delete('/:id', async (req, res) => {
+    try {
+        const [events] = await db.query('SELECT event_id FROM events WHERE category_id = ?', [req.params.id]);
+        if (events.length > 0) {
+            return res.status(409).json({
+                delete: 'error',
+                message: `This category cannot be deleted because ${events.length} event(s) use it.`
+            });
+        }
+
+        const [result] = await db.query('DELETE FROM categories WHERE category_id = ?', [req.params.id]);
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ delete: 'error', message: 'Category not found.' });
+        }
+        res.json({ delete: 'success' });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ delete: 'error', message: 'Failed to delete the category.' });
+    }
+});
+
 module.exports = router;
