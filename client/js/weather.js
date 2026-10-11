@@ -14,13 +14,8 @@ function showWeather(event) {
     fetch(url)
         .then(response => response.json())
         .then(data => {
-            // Find the event date in the list of forecast days
-            let dayIndex = -1;
-            for (let i = 0; i < data.daily.time.length; i++) {
-                if (formatDate(data.daily.time[i]) === formatDate(event.event_date)) {
-                    dayIndex = i;
-                }
-            }
+            // Find the event date in the list of forecast days (both are 'YYYY-MM-DD')
+            const dayIndex = data.daily.time.indexOf(event.event_date);
 
             if (dayIndex === -1) {
                 div.innerHTML = '<p class="event-meta">The forecast is only available up to 16 days before the event.</p>';
