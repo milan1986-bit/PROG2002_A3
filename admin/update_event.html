@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update event - Charity Events Admin</title>
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <header class="admin-header">
+        <div class="header-inner">
+            <a class="brand" href="index.html">Bright Futures <span>Admin</span></a>
+            <nav class="admin-nav">
+                <ul>
+                    <li><a href="index.html">Events</a></li>
+                    <li><a href="add_event.html">Add a new event</a></li>
+                    <li><a href="categories.html">Categories</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="page-heading">
+            <div>
+                <h1>Update event</h1>
+                <p class="subtitle" id="subtitle">Fields marked * are required.</p>
+            </div>
+            <a class="btn btn-secondary" href="index.html">&larr; Back to events</a>
+        </div>
+
+        <form id="form1" class="panel form-grid" novalidate onsubmit="updateEvent(); return(false);">
+            <h2 class="form-section">Event details</h2>
+            <div class="form-group span-2">
+                <label for="txtName">Event name *</label>
+                <input type="text" id="txtName" placeholder="Enter event name" required>
+            </div>
+            <div class="form-group">
+                <label for="txtCategory">Category *</label>
+                <select id="txtCategory" required><option value="">Select a category</option></select>
+            </div>
+            <div class="form-group">
+                <label for="txtOrg">Organisation *</label>
+                <select id="txtOrg" required><option value="">Select an organisation</option></select>
+            </div>
+            <div class="form-group span-2">
+                <label for="txtShortDesc">Short description *</label>
+                <input type="text" id="txtShortDesc" placeholder="One sentence about the event" required>
+            </div>
+            <div class="form-group span-2">
+                <label for="txtFullDesc">Full description</label>
+                <textarea id="txtFullDesc" rows="4"></textarea>
+            </div>
+
+            <h2 class="form-section">Date and location</h2>
+            <div class="form-group">
+                <label for="txtDate">Event date *</label>
+                <input type="date" id="txtDate" required>
+            </div>
+            <div class="form-group">
+                <label for="txtTime">Start time</label>
+                <input type="time" id="txtTime">
+            </div>
+            <div class="form-group span-2">
+                <label for="txtLocation">Location *</label>
+                <input type="text" id="txtLocation" placeholder="e.g. Botanic Gardens, Adelaide" required>
+            </div>
+            <div class="form-group">
+                <label for="txtLatitude">Latitude (for weather forecast)</label>
+                <input type="number" id="txtLatitude" step="any" placeholder="e.g. -34.9285">
+            </div>
+            <div class="form-group">
+                <label for="txtLongitude">Longitude (for weather forecast)</label>
+                <input type="number" id="txtLongitude" step="any" placeholder="e.g. 138.6007">
+            </div>
+            <div class="form-group span-2">
+                <label for="txtImage">Image URL</label>
+                <input type="text" id="txtImage" placeholder="https://...">
+            </div>
+
+            <h2 class="form-section">Tickets and fundraising</h2>
+            <div class="form-group">
+                <label for="txtPrice">Ticket price ($) *</label>
+                <input type="number" id="txtPrice" min="0" step="0.01">
+            </div>
+            <div class="form-group checkbox-group">
+                <label><input type="checkbox" id="chkFree"> Free event</label>
+            </div>
+            <div class="form-group">
+                <label for="txtGoal">Fundraising goal ($)</label>
+                <input type="number" id="txtGoal" min="0" step="0.01" value="0">
+            </div>
+            <div class="form-group">
+                <label for="txtProgress">Raised so far ($)</label>
+                <input type="number" id="txtProgress" min="0" step="0.01" value="0">
+            </div>
+            <div class="form-group checkbox-group span-2">
+                <label><input type="checkbox" id="chkSuspended"> Suspended (hidden from the public website)</label>
+            </div>
+
+            <div class="form-actions span-2">
+                <a class="btn btn-secondary" href="index.html">Cancel</a>
+                <input type="submit" value="Save" class="btn btn-primary">
+            </div>
+        </form>
+
+        <!-- registrations -->
+        <div class="panel">
+            <h2>Registrations</h2>
+            <div id="registrations" class="table-wrapper">
+                <p class="empty-state">Loading registrations...</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>&copy; 2026 Bright Futures Foundation &middot; Staff administration</footer>
+
+    <script src="js/api.js"></script>
+    <script src="js/event-form.js"></script>
+    <script src="js/update_event.js"></script>
+</body>
+</html>
