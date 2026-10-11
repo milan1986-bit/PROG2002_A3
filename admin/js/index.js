@@ -18,7 +18,7 @@ async function loadEvents() {
         table.innerHTML = `
             <tr>
                 <th>ID</th><th>Event</th><th>Date</th><th>Location</th>
-                <th>Category</th><th>Price</th><th>Status</th><th>Actions</th>
+                <th>Category</th><th>Price</th><th>Registrations</th><th>Status</th><th>Actions</th>
             </tr>`;
 
         events.forEach(event => {
@@ -30,6 +30,7 @@ async function loadEvents() {
                 <td>${event.location}</td>
                 <td>${event.category_name}</td>
                 <td>${formatPrice(event)}</td>
+                <td>${event.registration_count} (${Number(event.tickets_sold)} tickets)</td>
                 <td><span class="badge status-${event.status}">${statusLabel(event.status)}</span></td>
                 <td class="actions">
                     <a class="btn btn-small btn-secondary" href="update_event.html?id=${event.event_id}">Edit</a>
