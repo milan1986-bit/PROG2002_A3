@@ -56,7 +56,9 @@ function renderEvent(event) {
                     <div class="info-card">
                         <h3>Ticket Information</h3>
                         <p class="price-tag">${formatPrice(event)}</p>
-                        <a id="register-btn" class="btn btn-primary register-link" href="register.html?id=${event.event_id}">Register</a>
+                        ${event.status === 'past'
+                            ? '<p class="event-meta">Registration is closed because this event has already taken place.</p>'
+                            : `<a id="register-btn" class="btn btn-primary register-link" href="register.html?id=${event.event_id}">Register</a>`}
                     </div>
                 </div>
 
