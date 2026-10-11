@@ -85,11 +85,14 @@ function showRegistrations(registrations) {
         return;
     }
 
+    // registrations are already sorted by the API (latest purchase first)
+    let totalTickets = 0;
     const table = document.createElement('table');
     table.className = 'data-table';
-    table.innerHTML = '<tr><th>Name</th><th>Tickets</th><th>Registration date</th></tr>';
+    table.innerHTML = '<tr><th>Name</th><th>Tickets</th><th>Purchased on</th></tr>';
 
     registrations.forEach(registration => {
+        totalTickets = totalTickets + registration.tickets;
         const row = document.createElement('tr');
 
         const nameCell = document.createElement('td');
@@ -101,11 +104,16 @@ function showRegistrations(registrations) {
         row.appendChild(ticketsCell);
 
         const dateCell = document.createElement('td');
-        dateCell.textContent = formatDate(registration.registration_date);
+        dateCell.textContent = formatDateTime(registration.registration_date);
         row.appendChild(dateCell);
 
         table.appendChild(row);
     });
 
+    const summary = document.createElement('p');
+    summary.className = 'event-meta';
+    summary.textContent = `${registrations.length} registration(s), ${totalTickets} ticket(s) purchased. Latest first.`;
+
+    div.appendChild(summary);
     div.appendChild(table);
 }
