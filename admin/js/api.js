@@ -15,9 +15,24 @@ async function fetchJSON(path) {
     return response.json();
 }
 
+// Event dates come from the API as 'YYYY-MM-DD', so read them as a local date (not UTC)
+function toDate(dateString) {
+    if (/^\d{4}-\d{2}-\d{2}$/.test(dateString)) {
+        const parts = dateString.split('-');
+        return new Date(parts[0], parts[1] - 1, parts[2]);
+    }
+    return new Date(dateString);
+}
+
 function formatDate(dateString) {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
+    return toDate(dateString).toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+// date and time, used for when tickets were purchased
+function formatDateTime(dateString) {
+    return toDate(dateString).toLocaleString('en-AU', {
+        day: 'numeric', month: 'short', year: 'numeric', hour: 'numeric', minute: '2-digit'
+    });
 }
 
 function formatPrice(event) {
