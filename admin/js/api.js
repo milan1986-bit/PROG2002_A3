@@ -1,5 +1,10 @@
-// Change this to the API's URL after deploying to cPanel
-const API_BASE_URL = 'http://localhost:3000/api';
+// URL of the API deployed on cPanel - change this to your own cPanel API address
+const DEPLOYED_API_URL = 'https://YOUR-CPANEL-API-URL/api';
+
+// Use the local API while testing on this computer, otherwise use the deployed API
+const API_BASE_URL = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
+    ? 'http://localhost:3000/api'
+    : DEPLOYED_API_URL;
 
 // helper functions
 async function fetchJSON(path) {
