@@ -33,6 +33,7 @@ async function loadEvents() {
                 <td><span class="badge status-${event.status}">${statusLabel(event.status)}</span></td>
                 <td class="actions">
                     <a class="btn btn-small btn-secondary" href="update_event.html?id=${event.event_id}">Edit</a>
+                    <a class="btn btn-small btn-danger" href="#" onclick="deleteByID(${event.event_id}); return false;">Delete</a>
                 </td>`;
             table.appendChild(row);
         });
@@ -42,4 +43,31 @@ async function loadEvents() {
         console.error('Error fetching data', error);
         dataDiv.innerHTML = '<p class="empty-state">Failed to load data. Please make sure the API server is running.</p>';
     }
+}
+
+// Sends a DELETE request to the API for the selected event
+function deleteByID(id) {
+    if (!confirm('Are you sure you want to delete event ' + id + '?')) {
+        return;
+    }
+
+    fetch(API_BASE_URL + '/admin/events/' + id, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => response.json())
+        .then(data => {
+            if (data.delete === 'success') {
+                alert('Event deleted successfully!');
+                loadEvents();
+            } else if (data.delete === 'error') {
+                alert('Error: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Delete failed. Please make sure the API server is running.');
+        });
 }
