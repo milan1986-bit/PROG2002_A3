@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories - Charity Events Admin</title>
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <header class="admin-header">
+        <div class="header-inner">
+            <a class="brand" href="index.html">Bright Futures <span>Admin</span></a>
+            <nav class="admin-nav">
+                <ul>
+                    <li><a href="index.html">Events</a></li>
+                    <li><a href="add_event.html">Add a new event</a></li>
+                    <li><a href="categories.html" class="active">Categories</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="page-heading">
+            <div>
+                <h1>Event Categories</h1>
+                <p class="subtitle">Add, rename or delete the categories used to group events.</p>
+            </div>
+        </div>
+
+        <form id="form1" class="panel inline-form" novalidate onsubmit="addCategory(); return(false);">
+            <div class="form-group">
+                <label for="txtCategoryName">New category name</label>
+                <input type="text" id="txtCategoryName" placeholder="e.g. Quiz Night" required>
+            </div>
+            <input type="submit" value="Add Category" class="btn btn-primary">
+        </form>
+
+        <div class="panel">
+            <div id="data" class="table-wrapper">
+                <p class="empty-state">Loading categories...</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>&copy; 2026 Bright Futures Foundation &middot; Staff administration</footer>
+
+    <script src="js/api.js"></script>
+    <script src="js/categories.js"></script>
+</body>
+</html>
