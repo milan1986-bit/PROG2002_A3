@@ -1,5 +1,5 @@
 // URL of the API deployed on cPanel - change this to your own cPanel API address
-const DEPLOYED_API_URL = 'https://YOUR-CPANEL-API-URL/api';
+const DEPLOYED_API_URL = 'https://24701154.it.scu.edu.au/charityapi/api';
 
 // Use the local API while testing on this computer, otherwise use the deployed API
 const API_BASE_URL = (location.hostname === 'localhost' || location.hostname === '127.0.0.1')
